@@ -1,5 +1,5 @@
 # vasitum-core
-This repo will replace vasitum-api repo completely and will contain core business login for vasitum platform.
+This repo will replace vasitum-api repo completely and will contain core business logic for vasitum platform.
 
 ### System Requirement
 * Java 11
