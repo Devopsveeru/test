@@ -11,15 +11,23 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
+
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @Api
 @Slf4j
 @RestController
-@RequestMapping("/healthcheck")
+@RequestMapping("/")
 public class HealthCheckController {
 
     @GetMapping(produces = APPLICATION_JSON_VALUE)
+    @ApiOperation("Get the service status")
+    public HealthCheckResponse getServiceStatus() {
+        return new HealthCheckResponse("UP");
+    }
+
+    @GetMapping(value = "/healthcheck", produces = APPLICATION_JSON_VALUE)
     @ApiOperation("Get the service health check status")
     public HealthCheckResponse getResponse() {
         return new HealthCheckResponse("UP");
