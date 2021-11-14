@@ -25,7 +25,7 @@
 
 on:
   push:
-    branches: [ devops ]
+    branches: [ main ]
   release:
     types: [created]
 
