@@ -74,8 +74,8 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: vasitum-core-task.json
-        container-name: vasitum-core-container
+        task-definition: vasitum-core-task-v1.json
+        container-name: vasitum-core-container-v1
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
