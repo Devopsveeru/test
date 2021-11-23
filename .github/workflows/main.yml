@@ -74,14 +74,14 @@ jobs:
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
       with:
-        task-definition: vasitumcore-test-task-definition.json
-        container-name: vasitumcore-web-test-container
+        task-definition: vasitum-core-task.json
+        container-name: vasitum-core-container
         image: ${{ steps.build-image.outputs.image }}
 
     - name: Deploy Amazon ECS task definition
       uses: aws-actions/amazon-ecs-deploy-task-definition@v1
       with:
         task-definition: ${{ steps.task-def.outputs.task-definition }}
-        service: vasitumcorewebservice
-        cluster: vasitumcore
+        service: vasitum-corewebservice
+        cluster: vasitum-core
         wait-for-service-stability: true
