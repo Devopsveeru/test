@@ -1,0 +1,45 @@
+#This is a basic Interactive Deployment workflow 
+#Owner:- Vasitum Devops Team
+#Date:- Dec 6, 2021
+
+name: InteractiveDeployment 
+on: 
+  workflow_dispatch:
+    inputs:
+      repo:
+        description: 'Define Repository name'     
+        required: true
+        default: 'vasitum-core'
+      branch:
+        description: 'Define branch name'     
+        required: true
+        default: 'devops'
+      environment:
+        type: choice
+        description: Choose environment
+        options: 
+        - test
+        - dev
+        
+jobs:
+  interactiveDeployment:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        repository: ${{ github.event.repository.owner.login }}/${{ github.event.inputs.repo }}
+        ref: ${{ github.event.inputs.branch }}
+        
+    - name: Deploy to EC2
+      env:
+        ACCESS_KEY: ${{ secrets[format('{0}_ACCESS_KEY', github.event.inputs.environment)]  }}
+        HOSTNAME: ${{ secrets[format('{0}_HOSTNAME', github.event.inputs.environment)]  }}
+        USERNAME: '${{ secrets.USERNAME  }}'
+      run: >
+        echo "Env: ${{ github.event.inputs.environment }}" 
+        echo "Branch: ${{ github.event.inputs.branch }}"
+        echo "Repo: ${{ github.event.inputs.repo }}"
+                
+        echo "${ACCESS_KEY}" > access_key && chmod 600 access_key
+        
+        ssh -o StrictHostKeyChecking=no -i access_key ${USERNAME}@${HOSTNAME} touch test.txt
